@@ -16,7 +16,8 @@ class RectangleSelectImagePanel(wx.Panel):
         wx.Panel.__init__(self, parent)
 
         # Intitialise the matplotlib figure
-        self.figure = plt.figure()
+        # self.figure = plt.figure() # it has it's own event loop.
+        self.figure = matplotlib.figure.Figure()
 
         # Create an axes, turn off the labels and add them to the figure
         self.axes = plt.Axes(self.figure, [0, 0, 1, 1])
