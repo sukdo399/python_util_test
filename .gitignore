@@ -1,0 +1,18 @@
+*.py[cod]
+
+# C extensions
+*.so
+core
+
+
+# Pycharm project
+.idea
+
+__pycache__
+
+.cache
+
+# pyinstaller
+build
+dist
+
