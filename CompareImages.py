@@ -2,6 +2,42 @@ from skimage.measure import structural_similarity as ssim
 import numpy as np
 import cv2
 
+import math
+
+
+from skimage.measure import compare_ssim
+
+
+
+def cal_entropy(img):
+    """ Adapted from:
+        http://areshopencv.blogspot.com/2011/12/computing-entropy-of-image.html
+        and
+        https://en.wikipedia.org/wiki/Entropy
+    """
+    freqs = cv2.calcHist([img], [0], None, [255], [0, 255]).T[0]
+    row_sum = np.sum(freqs)
+    freqs = freqs * 1.0 / row_sum
+    return sum([-x * math.log(x, 2) for x in freqs.tolist() if x > 0])
+
+def get_entropy(path, region_list):
+
+    img = cv2.imread(path, 0)
+
+    for i in region_list:
+        x = int(round(i[0]))
+        y = int(round(i[1]))
+        w = int(round(i[2]))
+        h = int(round(i[3]))
+        print(x, y, w, h)
+        crop_img = img[y:y + h, x:x + w]
+
+        entropy = cal_entropy(crop_img)
+
+        print("entropy: %.2f" % entropy)
+
+
+
 
 def mse(imageA, imageB):
     # the 'Mean Squared Error' between the two images is the
